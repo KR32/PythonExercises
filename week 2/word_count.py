@@ -27,7 +27,7 @@ print_words() and print_top().
 """
 
 import sys
-from collections import OrderedDict
+
 filename=open('D:\\App_Folders\\vscode\\Python\\vumaasha-s-py\\workouts\\Python-Play Ground\\07-11-2020.py', "r+")
 
 def dict_generator(filename):
