@@ -4,7 +4,6 @@ while counter <= 5:
      print("Hello, world")
      counter = counter + 1
 
-
 # for
 numbers=[1,3,6,2,5]
 for item in numbers:
