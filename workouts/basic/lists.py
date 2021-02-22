@@ -1,6 +1,8 @@
 colors=['red','green','yellow']
 
 for i in range(len(colors)):
+    print(len(colors))
+    print(i)
     print(colors[i])
 colors
 
