@@ -1,0 +1,82 @@
+spouse_profile_id
+spouse_registered
+name_of_spouse
+spouse_email
+spouse_speciality_id
+passport_name
+passport_number
+passport_expiry_date
+marketing
+
+
+personal_website
+our_rating
+do_better
+delete_my_account
+privacy_acceptance
+available_during_covid
+
+
+#  advanced (omitted for now)
+linkedin_address
+skype_id
+notice_period_days
+expected_join_date
+current_salary
+applied_to_other_agencies
+marital_partner_seeking_job
+other_location
+relocate_family
+available_from
+display_data_id
+subscription_preferences
+new_job_opportunities
+urgent_messages_and_alerts
+invitations_relating_to_jobs
+promotions_and_press_releases
+additional_information
+
+
+
+years_at_level = Column(Integer, nullable=True)
+local_license = Column(Boolean, nullable=True)
+license_number = Column(String(50), nullable=True)
+eligibility_letter_available_for = Column(String(100), nullable=True)
+dataflow_complete = Column(Boolean, nullable=True)
+psv_dataflow_complete = Column(String(50), nullable=True)
+uploaded_cv_link = Column(Text, nullable=True)
+terms_and_conditions = Column(Boolean, nullable=True)
+subscribed = Column(Boolean, nullable=True)
+deleted = Column(Boolean, server_default='false', nullable=False)
+has_emirates_id = Column(Boolean, nullable=True)
+emirates_id = Column(String(100), nullable=True)
+employed_in_uae = Column(Boolean, nullable=True)
+current_medical_facility = Column(String(100), nullable=True)
+# audit fields
+comments = Column(String(255), nullable=True)
+created_on = Column(DateTime, server_default=text("now()"), nullable=False)
+created_by = Column(Integer, nullable=False)
+last_modified_on = Column(DateTime, nullable=True)
+last_modified_by = Column(Integer, nullable=True)
+deleted_on = Column(DateTime, nullable=True)
+deleted_by = Column(Integer, nullable=True)
+
+# contract details
+job_time = Column(String(20), nullable=True)  # full-time / part-time
+job_type = Column(String(20), nullable=True)  # permanent / Temporary
+extra_hours_to_current_job = Column(Boolean, nullable=True)
+flexible = Column(Boolean, nullable=True)
+extra_hours_available = Column(Integer, nullable=True)
+available = Column(Boolean, nullable=True)
+volunteer = Column(Boolean, nullable=True)
+salary_expectation_min = Column(Integer, nullable=True)
+salary_expectation_max = Column(Integer, nullable=True)
+current_salary_currency_id = Column(ForeignKey('currencies.currency_id'), nullable=True)
+salary_expectation_currency_id = Column(ForeignKey('currencies.currency_id'), nullable=True)
+
+nurse_registration_type = Column(ArrayOfEnum(Enum(NurseRegistrationType)), nullable=True)
+
+# frontsheet
+frontsheet_config_fields = Column(JSONB(astext_type=Text()), nullable=True)
+
+80-14 = 66

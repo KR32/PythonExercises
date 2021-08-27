@@ -1,0 +1,31 @@
+[independent] 
+(8, 7)->demo1 
+(15, 82)->vee 
+(16, 83)->cee 
+
+[parent] 
+(14, 80)->cee 
+
+
+[parent - child]
+(9,73)->uemae [parent]
+
+# --(9,74)->uemhp [uemae-child]
+
+# --(9,75)->uemmf [uemae-child]
+
+# --(9,78)->uemdt [uemae-child]
+
+[parent - child]
+(12,76)->hmgsa [parent]
+
+# --(12,79)->hmgad [hmgsa-child]
+
+# --(12,77)->hmgoh [hmgsa-child]
+
+
+[agency]
+
+(13,73)->ohr [main-agency]
+
+# -- (13,81)->ohr [third-party]
