@@ -1,3 +1,0 @@
-
-class HMGSA(object):
-    pass
