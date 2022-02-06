@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Type, Union
+from unittest import result
 from fastapi import HTTPException
 from sqlalchemy import column, inspect
 from sqlalchemy.orm.query import Query
@@ -72,14 +73,27 @@ class Base:
         db_session: Session,
         all_rows: Optional[bool] = False,
         return_type: Optional[Union[BaseModel, dict]] = None,
+        exception: Optional[Any] = None,
         **kwargs
     ):
+        """
+        Get Record(s) by given criteria
+
+        **parameters**
+
+        * `db_session` - SQLAlchemy session
+        * `all_rows` - If True, return all rows, else return first row
+        * `return_type` - The type of return object (pydantic, dict) [default=Sqlalchemy Query Result Object].
+        * `raise_exception` - If True, raise exception with `status_code = 400` if no record found.
+        * `kwargs` - Keyword arguments to filter the query
+
+        """
         instance = db_session.query(cls).filter_by(**kwargs)
         instance = instance.all() if all_rows else instance.first()
-        if not instance:
-            raise HTTPException(
-                status_code=400, detail=f"{cls.__name__} Object does not Exist")
-        instance = jsonable_encoder(instance)
+        if not instance and exception:
+            raise exception
+        if instance:
+            instance = jsonable_encoder(instance)
         return return_type(**instance) if return_type else instance
 
     @classmethod
@@ -96,10 +110,11 @@ class Base:
         **Parameters**
         * `db_session`: SQLAlchemy session
         * `obj`: A Pydantic model (schema) class or a dictionary
-        * `return_type`: The type of return object (declarative_base by default, pydantic, dict).
-        * `commit`: Commit the transaction.
+        * `return_type`: The type of return object (pydantic, dict) [default=Sqlalchemy Query Result Object].
+        * `commit`: Commit the transaction [default=True].
         """
         # to get obj as dict
+
         obj = cls.object_to_dict(obj)
 
         new_obj = cls(**obj)  # type: ignore
@@ -132,8 +147,8 @@ class Base:
         **Parameters**
         * `db_session`: SQLAlchemy session
         * `obj`: A Pydantic model (schema) class or a dictionary
-        * `return_type`: The type of the returned object.
-        * `commit`: Commit the transaction.
+        * `return_type`: The type of return object (pydantic, dict) [default=Sqlalchemy Query Result Object]
+        * `commit`: Commit the transaction. [default=True]
         """
         # to get obj as dict
         obj = cls.object_to_dict(obj)
@@ -183,7 +198,7 @@ class Base:
         **Parameters**
         * `db_session`: SQLAlchemy session
         * `id`: primary key's value of the record to be deleted
-        * `commit`: Commit the transaction.
+        * `commit`: Commit the transaction. [default=True]
         """
         query = db_session.query(cls)
         db_obj = cls.add_primary_key_criteria(query, id).one_or_none()
