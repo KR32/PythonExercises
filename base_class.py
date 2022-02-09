@@ -1,5 +1,4 @@
 from typing import Any, Dict, List, Optional, Type, Union
-from unittest import result
 from fastapi import HTTPException
 from sqlalchemy import column, inspect
 from sqlalchemy.orm.query import Query
@@ -72,7 +71,7 @@ class Base:
         cls,
         db_session: Session,
         all_rows: Optional[bool] = False,
-        return_type: Optional[Union[BaseModel, dict]] = None,
+        return_type: Optional[Union[Union[BaseModel, dict], List[Union[BaseModel, dict]]]] = None,
         exception: Optional[Any] = None,
         **kwargs
     ):
@@ -83,7 +82,7 @@ class Base:
 
         * `db_session` - SQLAlchemy session
         * `all_rows` - If True, return all rows, else return first row
-        * `return_type` - The type of return object (pydantic, dict) [default=Sqlalchemy Query Result Object].
+        * `return_type` - The type of return object (pydantic, dict) [default=Sqlalchemy Query Result Object(s)].
         * `raise_exception` - If True, raise exception with `status_code = 400` if no record found.
         * `kwargs` - Keyword arguments to filter the query
 
